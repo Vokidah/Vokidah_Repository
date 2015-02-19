@@ -1,2 +1,2 @@
 # Vokidah_Repository
-My repository
+Hello , that`s my first repository and I`m trying to understand all
