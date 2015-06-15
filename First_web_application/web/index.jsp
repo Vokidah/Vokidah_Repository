@@ -1,6 +1,6 @@
 <%--
   Created by IntelliJ IDEA.
-  User: HP
+  org.hadikov.projectname.dto.User: HP
   Date: 14.06.2015
   Time: 23:20
   To change this template use File | Settings | File Templates.

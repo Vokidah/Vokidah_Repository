@@ -7,7 +7,7 @@
 
 <servlet>
     <servlet-name>ListenServlet</servlet-name>
-    <servlet-class>ListenServlet</servlet-class>
+    <servlet-class>org.hadikov.projectname.servlet.ListenServlet</servlet-class>
 </servlet>
 
 <servlet-mapping>

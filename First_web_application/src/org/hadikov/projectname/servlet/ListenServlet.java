@@ -1,3 +1,5 @@
+package org.hadikov.projectname.servlet;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
@@ -6,16 +8,13 @@ import javax.servlet.http.*;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.*;
+import org.hadikov.projectname.dto.User;
 
 public class ListenServlet extends HttpServlet {
-    List<User> users;
+
     ObjectMapper mapper = new ObjectMapper();
+
     public void init(){
-        users=new ArrayList<User>();
-        users.add(new User(1,"Arsen","arsen.khadikov@gmail.com"));
-        users.add(new User(2,"Vova","vova.shvets@gmail.com"));
-        users.add(new User(3,"Vlad","vlad.bondar@gmail.com"));
-        users.add(new User(4,"Tyoma","tyoma.polyakov@gmail.com"));
 
     }
 
@@ -23,6 +22,7 @@ public class ListenServlet extends HttpServlet {
         resp.setContentType("text/html");
         PrintWriter out = resp.getWriter();
         boolean check=false;
+
         if(req.getParameter("id")==null) {
             out.print("<h1>");
             for(User user : users) {
@@ -73,7 +73,7 @@ public class ListenServlet extends HttpServlet {
                     check=true;
                 }
             }
-            if(check){out.print("<h1>User has been successfully removed</h1>");}
+            if(check){out.print("<h1>org.hadikov.projectname.dto.User has been successfully removed</h1>");}
             else{out.print("<h1>Error, element with that id doesn`t exist</h1>");}
         }
     }
