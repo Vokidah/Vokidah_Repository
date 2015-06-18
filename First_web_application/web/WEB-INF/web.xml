@@ -7,12 +7,12 @@
 
 <servlet>
     <servlet-name>ListenServlet</servlet-name>
-    <servlet-class>org.hadikov.projectname.servlet.ListenServlet</servlet-class>
+    <servlet-class>org.khadikov.projectname.servlet.ListenServlet</servlet-class>
 </servlet>
 
 <servlet-mapping>
     <servlet-name>ListenServlet</servlet-name>
-    <url-pattern>/users</url-pattern>
+    <url-pattern>/rest/*</url-pattern>
 </servlet-mapping>
 
 </web-app>

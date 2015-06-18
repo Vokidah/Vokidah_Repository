@@ -11,12 +11,5 @@
     <title></title>
   </head>
   <body>
-    <form action="users" method="GET">
-      Get by ID: <input type="text" name="id">
-    </form>
-    </br>
-    <form action="users">
-      Delete by ID: <input type="text" name="id">
-    </form>
   </body>
 </html>

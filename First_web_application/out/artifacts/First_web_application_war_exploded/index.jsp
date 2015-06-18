@@ -1,6 +1,6 @@
 <%--
   Created by IntelliJ IDEA.
-  User: HP
+  org.hadikov.projectname.dto.User: HP
   Date: 14.06.2015
   Time: 23:20
   To change this template use File | Settings | File Templates.
@@ -11,12 +11,5 @@
     <title></title>
   </head>
   <body>
-    <form action="users" method="GET">
-      Get by ID: <input type="text" name="id">
-    </form>
-    </br>
-    <form action="users">
-      Delete by ID: <input type="reset" name="id">
-    </form>
   </body>
 </html>
