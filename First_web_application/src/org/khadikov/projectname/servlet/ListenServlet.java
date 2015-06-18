@@ -16,11 +16,12 @@ import org.codehaus.jackson.*;
 
 import org.eclipse.jdt.internal.compiler.batch.ClasspathJar;
 import org.eclipse.jdt.internal.compiler.batch.FileSystem;
+import org.khadikov.projectname.annotations.Restful;
 import org.khadikov.projectname.dto.User;
 import org.khadikov.projectname.rest.Users;
 import org.khadikov.projectname.annotations.Path;
 
-@Path("/UserService")
+//@Path("/UserService")
 public class ListenServlet extends HttpServlet {
     String path;
     Map<String,Class> handlers = new HashMap<String,Class>();
@@ -34,9 +35,9 @@ public class ListenServlet extends HttpServlet {
                 Class cl = Class.forName(name);
                 Annotation[] a = cl.getAnnotations();
                 for (int j = 0; j < a.length; j++)
-                    if (a[j] instanceof Path) {
-                        Path path=(Path) a[j];
-                        handlers.put(path.value(),cl);
+                    if (a[j] instanceof Restful) {
+                        Restful rest=(Restful) a[j];
+                        handlers.put(rest.value(),cl);
                     }
             }
 
@@ -49,13 +50,32 @@ public class ListenServlet extends HttpServlet {
     public void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String method = req.getMethod();
         PrintWriter out=resp.getWriter();
-        out.println(handlers.size()+" "+method);
         for (Map.Entry<String,Class> entry : handlers.entrySet()) {
             String key = entry.getKey();
             Class value = entry.getValue();
-            out.println(key+" "+value);
         }
         if(method.equals("GET")) {
+            for (Map.Entry<String,Class> entry : handlers.entrySet()) {
+                String key = entry.getKey();
+                Class value = entry.getValue();
+                if(key.equals(req.getRequestURI())){
+                    try {
+                        Method m=value.getMethod("get_all_users",null);
+                        Object obj=value.newInstance();
+                        m.invoke(obj, null);
+                        out.println(obj.toString());
+                    } catch (NoSuchMethodException e) {
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    } catch (InstantiationException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
 
         }
         else if(method.equals("POST")) {

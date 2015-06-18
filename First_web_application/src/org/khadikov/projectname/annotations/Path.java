@@ -3,7 +3,7 @@ import java.lang.annotation.*;
 /**
  * @author Eugene Goncharov
  */
-@Target(ElementType.TYPE)
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Path {
     String value();
