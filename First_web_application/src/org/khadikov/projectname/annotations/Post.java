@@ -1,10 +1,11 @@
 package org.khadikov.projectname.annotations;
-import java.lang.annotation.*;
+
 /**
- * @author Eugene Goncharov
+ * Created by HP on 19.06.2015.
  */
+import java.lang.annotation.*;
+
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Path {
-    String value();
+public @interface Post {
 }

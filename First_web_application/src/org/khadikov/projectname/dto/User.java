@@ -1,6 +1,8 @@
 package org.khadikov.projectname.dto;
-import org.khadikov.projectname.annotations.Path;
+
+
 import java.lang.annotation.*;
+
 /**
  * Created by HP on 14.06.2015.
  */
@@ -35,8 +37,14 @@ public class User {
     public String getEmail() {
         return email;
     }
-    public void setName(String name){this.name=name;}
-    public void setEmail(String email){this.email=email;}
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     // Please take a look why do we need equals/hash-code and toString methods
     // http://www.ideyatech.com/2011/04/effective-java-equals-and-hashcode/

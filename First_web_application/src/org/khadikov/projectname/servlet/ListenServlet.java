@@ -9,115 +9,95 @@ import java.net.URL;
 import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.*;
 
+import org.khadikov.projectname.annotations.Get;
+import org.khadikov.projectname.scanner.ClassPathScanner;
 
-import org.eclipse.jdt.internal.compiler.batch.ClasspathJar;
-import org.eclipse.jdt.internal.compiler.batch.FileSystem;
-import org.khadikov.projectname.annotations.Restful;
-import org.khadikov.projectname.dto.User;
-import org.khadikov.projectname.rest.Users;
-import org.khadikov.projectname.annotations.Path;
-
-//@Path("/UserService")
 public class ListenServlet extends HttpServlet {
-    String path;
-    Map<String,Class> handlers = new HashMap<String,Class>();
-    public void init()throws ServletException
-    {
+    String packageName;
+    Map<String, Class> handlers;
+    Class listen;
 
-        try {
-            Class[] c = getClasses("org.khadikov.projectname");
-            for (int i = 0; i < c.length; i++) {
-                String name = c[i].getName();
-                Class cl = Class.forName(name);
-                Annotation[] a = cl.getAnnotations();
-                for (int j = 0; j < a.length; j++)
-                    if (a[j] instanceof Restful) {
-                        Restful rest=(Restful) a[j];
-                        handlers.put(rest.value(),cl);
-                    }
-            }
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void init() {
+        packageName = "org.khadikov.projectname";
+        handlers = new ClassPathScanner(packageName).getRestHandlers();
     }
+
     public void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String method = req.getMethod();
-        PrintWriter out=resp.getWriter();
-        for (Map.Entry<String,Class> entry : handlers.entrySet()) {
-            String key = entry.getKey();
-            Class value = entry.getValue();
-        }
-        if(method.equals("GET")) {
-            for (Map.Entry<String,Class> entry : handlers.entrySet()) {
-                String key = entry.getKey();
-                Class value = entry.getValue();
-                if(key.equals(req.getRequestURI())){
-                    try {
-                        Method m=value.getMethod("get_all_users",null);
-                        Object obj=value.newInstance();
-                        m.invoke(obj, null);
-                        out.println(obj.toString());
-                    } catch (NoSuchMethodException e) {
-                        e.printStackTrace();
-                    } catch (InvocationTargetException e) {
-                        e.printStackTrace();
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    } catch (InstantiationException e) {
-                        e.printStackTrace();
-                    }
+        String URI = req.getRequestURI();
+        PrintWriter out = resp.getWriter();
+        if (isContains(URI)) {
+            try {
+                if (method.equals("GET")) {
+                    for (Map.Entry<String, Class> entry : handlers.entrySet()) {
+                        String key = entry.getKey();
+                        Class value = entry.getValue();
 
+
+                        if (URI.equals(key) || URI.equals(key + "/")) {
+                            Method m = get_method(value.getDeclaredMethods(), "");
+                            Object obj =  value.newInstance();
+                            Object toPrint=m.invoke(obj, null);
+                            if(toPrint!=null)
+                                out.print(toPrint);
+                            else
+                                resp.sendError(404,"NOT FOUND");
+                        }
+                        else{
+                            Method m = get_method(value.getDeclaredMethods(), "/:id");
+                            Object obj = value.newInstance();
+                            String id=URI.substring(key.length()+1,URI.length());
+                            Object toPrint=m.invoke(obj, id);
+                            if(toPrint!=null)
+                                out.print(toPrint);
+                            else
+                                resp.sendError(404,"NOT FOUND");
+                        }
+
+                    }
+                } else if (method.equals("POST")) {
+
+                } else if (method.equals("PUT")) {
+
+                } else if (method.equals("DELETE")) {
+
+                }
+
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        } else {
+            resp.sendError(404, "NOT FOUND");
+        }
+    }
+
+    public boolean isContains(String URI) {
+        boolean check = false;
+        for (Map.Entry<String, Class> entry : handlers.entrySet()) {
+            String key = entry.getKey();
+            if (URI.contains(key + "/") || (URI.contains(key) && URI.substring(URI.length() - key.length()).equals(key)))
+                check = true;
+        }
+        return check;
+    }
+
+    public Method get_method(Method[] m, String value) {
+        for (int i = 0; i < m.length; i++) {
+            Annotation[] a = m[i].getDeclaredAnnotations();
+            for (Annotation annotation : a) {
+                if (annotation instanceof Get) {
+                    Get myAnnotation = (Get) annotation;
+                    if (value.equals(myAnnotation.value()))
+                        return m[i];
                 }
             }
 
         }
-        else if(method.equals("POST")) {
-
-        } else if(method.equals("PUT")) {
-
-        } else if(method.equals("DELETE")) {
-
-        }
-    }
-    private static Class[] getClasses(String packageName)
-            throws ClassNotFoundException, IOException
-    {
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        assert classLoader != null;
-        String path = packageName.replace('.', '/');
-        Enumeration<URL> resources = classLoader.getResources(path);
-        List<File> dirs = new ArrayList<File>();
-        while (resources.hasMoreElements()) {
-            URL resource = resources.nextElement();
-            dirs.add(new File(resource.getFile()));
-        }
-        ArrayList<Class> classes = new ArrayList<Class>();
-        for (File directory : dirs) {
-            classes.addAll(findClasses(directory, packageName));
-        }
-        return classes.toArray(new Class[classes.size()]);
-    }
-    private static List<Class> findClasses(File directory, String packageName) throws ClassNotFoundException {
-        List<Class> classes = new ArrayList<Class>();
-        if (!directory.exists()) {
-            return classes;
-        }
-        File[] files = directory.listFiles();
-        for (File file : files) {
-            if (file.isDirectory()) {
-                assert !file.getName().contains(".");
-                classes.addAll(findClasses(file, packageName + "." + file.getName()));
-            } else if (file.getName().endsWith(".class")) {
-                classes.add(Class.forName(packageName + '.' + file.getName().substring(0, file.getName().length() - 6)));
-            }
-        }
-        return classes;
+        return null;
     }
 }
