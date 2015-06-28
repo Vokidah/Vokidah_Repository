@@ -74,9 +74,38 @@ public class ListenServlet extends HttpServlet {
                                     resp.sendError(404,"NOT FOUND");
                                 }
                             } else if (method.equals("PUT")) {
+                                resp.setContentType("\"application/json\"");
+                                BufferedReader reader = req.getReader();
+                                Class a = handlers.get("class_user");
+                                ArrayList<Object> ob = new ArrayList<Object>();
+                                Object obj = gson.fromJson(reader, a);
+                                ob.add(obj);
+                                out.println(ob.get(0).toString());
+                                if (!(URI.equals(key) || URI.equals(key + "/"))){
+                                    toPrint = this.get_Object(ob, value, "/:id", method);
+                                    out.println(toPrint);
+                                    if (toPrint.equals(false)) {
+                                        resp.sendError(500, "can`t add");
+                                    } else {
+                                        resp.setStatus(201);
+                                    }
+                                }
+                                else{
+                                    resp.sendError(404,"NOT FOUND");
+                                }
 
                             } else if (method.equals("DELETE")) {
-
+                                resp.setContentType("\"application/json\"");
+                                if (!(URI.equals(key) || URI.equals(key + "/")))
+                                {
+                                    ArrayList<Object> ob = new ArrayList<Object>();
+                                    ob.add(URI.substring(key.length() + 1, URI.length()).toString());
+                                    toPrint = this.get_Object(ob, value, "/:id", method);
+                                    if (toPrint != null) {
+                                        out.println(toPrint.toString());
+                                    } else
+                                        resp.sendError(404, "NOT FOUND");
+                                }
                             }
                         }
                     }
