@@ -1,13 +1,13 @@
 package org.khadikov.projectname.dto;
 
 
-import java.lang.annotation.*;
+import org.khadikov.projectname.annotations.Body;
 
 /**
  * Created by HP on 14.06.2015.
  */
 
-
+@Body
 public class User {
     // You should double check what private/protected/public and package-local means
     private int id;
@@ -25,7 +25,6 @@ public class User {
         this.name = name;
         this.email = email;
     }
-
     public String getName() {
         return name;
     }
@@ -36,6 +35,10 @@ public class User {
 
     public String getEmail() {
         return email;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setName(String name) {
@@ -72,10 +75,10 @@ public class User {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("User{");
-        sb.append("id=").append(id);
-        sb.append(", name='").append(name).append('\'');
-        sb.append(", email='").append(email).append('\'');
+        final StringBuilder sb = new StringBuilder("{");
+        sb.append("\"id\"" + ":").append(id);
+        sb.append("," + "\"name\"" + ":").append("\"" + name + "\"");
+        sb.append("," + "\"email\"" + ":").append("\"" + email + "\"");
         sb.append('}');
         return sb.toString();
     }

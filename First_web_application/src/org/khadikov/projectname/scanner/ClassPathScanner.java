@@ -1,6 +1,8 @@
 package org.khadikov.projectname.scanner;
 
+import org.khadikov.projectname.annotations.Body;
 import org.khadikov.projectname.annotations.Restful;
+
 import java.io.IOException;
 import java.io.File;
 import java.lang.annotation.*;
@@ -17,18 +19,34 @@ public class ClassPathScanner {
                 String name = c[i].getName();
                 Class cl = Class.forName(name);
                 Annotation[] a = cl.getAnnotations();
-                for (int j = 0; j < a.length; j++)
+                for (int j = 0; j < a.length; j++) {
                     if (a[j] instanceof Restful) {
                         Restful rest = (Restful) a[j];
                         handlers.put(rest.value(), cl);
                     }
+                    if (a[j] instanceof Body) {
+                        Body body = (Body) a[j];
+                        handlers.put("class_user", cl);
+                    }
+
+                }
             }
-        } catch (ClassNotFoundException e) {
+        } catch (
+                ClassNotFoundException e
+                )
+
+        {
             e.printStackTrace();
-        } catch (IOException e) {
+        } catch (
+                IOException e
+                )
+
+        {
             e.printStackTrace();
         }
+
     }
+
     public Map<String, Class> getRestHandlers() {
         return handlers;
     }
