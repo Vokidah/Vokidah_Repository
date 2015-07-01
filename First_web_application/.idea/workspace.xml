@@ -30,8 +30,8 @@
       <file leaf-file-name="ListenServlet.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/org/khadikov/projectname/servlet/ListenServlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.26288658">
-              <caret line="20" column="19" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
+            <state vertical-scroll-proportion="-1.8041238">
+              <caret line="102" column="89" selection-start-line="102" selection-start-column="89" selection-end-line="102" selection-end-column="89" />
               <folding />
             </state>
           </provider>
@@ -41,7 +41,7 @@
         <entry file="file://$PROJECT_DIR$/src/org/khadikov/projectname/scanner/ClassPathScanner.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="21" column="52" selection-start-line="21" selection-start-column="52" selection-end-line="21" selection-end-column="52" />
+              <caret line="23" column="54" selection-start-line="23" selection-start-column="54" selection-end-line="23" selection-end-column="54" />
               <folding />
             </state>
           </provider>
@@ -142,6 +142,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -274,7 +275,6 @@
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -839,15 +839,17 @@
       <workItem from="1435489273374" duration="7255000" />
       <workItem from="1435499372021" duration="190000" />
       <workItem from="1435502940436" duration="113000" />
+      <workItem from="1435595465219" duration="510000" />
+      <workItem from="1435597593177" duration="138000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="118296000" />
+    <option name="totallyTimeSpent" value="118944000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1384" height="738" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1259,7 +1261,7 @@
     <entry file="file://$PROJECT_DIR$/src/org/khadikov/projectname/scanner/ClassPathScanner.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="21" column="52" selection-start-line="21" selection-start-column="52" selection-end-line="21" selection-end-column="52" />
+          <caret line="23" column="54" selection-start-line="23" selection-start-column="54" selection-end-line="23" selection-end-column="54" />
           <folding />
         </state>
       </provider>
@@ -1274,8 +1276,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/khadikov/projectname/servlet/ListenServlet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.26288658">
-          <caret line="20" column="19" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
+        <state vertical-scroll-proportion="-1.8041238">
+          <caret line="102" column="89" selection-start-line="102" selection-start-column="89" selection-end-line="102" selection-end-column="89" />
           <folding />
         </state>
       </provider>

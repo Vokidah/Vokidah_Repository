@@ -7,5 +7,5 @@ package org.khadikov.projectname.annotations;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Put {
-    String value();
+    String value() default "/:id";
 }

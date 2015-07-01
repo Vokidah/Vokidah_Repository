@@ -10,7 +10,7 @@ import java.util.*;
 
 public class ClassPathScanner {
     Map<String, Class> handlers = new HashMap<String, Class>();
-
+    Map<String , Object> instances=new HashMap<String, Object>();
     public ClassPathScanner(String packageName) {
         try {
             Class[] classes = getClasses(packageName);
@@ -23,6 +23,7 @@ public class ClassPathScanner {
                     if (annotation instanceof Restful) {
                         Restful rest = (Restful) annotation;
                         handlers.put(rest.value(), aClass);
+                        instances.put(rest.value(),aClass.newInstance());
                     }
                 }
             }
@@ -30,10 +31,14 @@ public class ClassPathScanner {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
         }
 
     }
-
+    public Map<String,Object> getRestInstances(){return instances;}
     public Map<String, Class> getRestHandlers() {
         return handlers;
     }

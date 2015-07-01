@@ -11,7 +11,7 @@ import java.util.Map;
 
 @Restful("/users")
 public class Users {
-    private List<User> users = new ArrayList<User>();
+    private ArrayList<User> users = new ArrayList<User>();
     private Map<String, User> usersByEmail = new HashMap<String, User>();
     private Map<Integer, User> usersByIdx = new HashMap<Integer, User>();
 
@@ -56,8 +56,9 @@ public class Users {
 
         if (!usersByEmail.containsKey(user.getEmail())) {
             result = this.users.add(user);
+            this.usersByIdx.put(user.getId(), user);
+            this.usersByEmail.put(user.getEmail(), user);
         }
-
         return result;
     }
 
@@ -69,7 +70,10 @@ public class Users {
             if (user.getId() == user1.getId()) {
                 user1.setEmail(user.getEmail());
                 user1.setName(user.getName());
-
+                this.usersByIdx.get(user.getId()).setName(user.getName());
+                this.usersByIdx.get(user.getId()).setName(user.getEmail());
+                this.usersByEmail.get(user1.getEmail()).setName(user.getName());
+                this.usersByEmail.get(user1.getEmail()).setName(user.getEmail());
                 return true;
             }
         }
@@ -79,10 +83,14 @@ public class Users {
 
     @Delete("/:id")
     public boolean deleteUser(String id) {
-        for (int i = 0; i < users.size(); i++) {
-            if (Integer.parseInt(id) == users.get(i).getId()) {
-                users.remove(i);
-                return true;
+        if (usersByIdx.containsKey(Integer.parseInt(id))) {
+            for (int i = 0; i < users.size(); i++) {
+                if (Integer.parseInt(id) == users.get(i).getId()) {
+                    users.remove(i);
+                    this.usersByEmail.remove(usersByIdx.get(Integer.parseInt(id)).getEmail());
+                    this.usersByIdx.remove(Integer.parseInt(id));
+                    return true;
+                }
             }
         }
         return false;
