@@ -4,7 +4,7 @@ package org.khadikov.projectname.http;
  * @author Eugene Goncharov
  */
 public enum Responses {
-    NOT_FOUND(404, "NOT FOUND");
+    NOT_FOUND(404, "NOT FOUND"),CANT_ADD(500,"CANT ADD");
 
     int code;
     String message;

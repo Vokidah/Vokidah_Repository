@@ -54,19 +54,15 @@ public class ListenServlet extends HttpServlet {
                         String path = entry.getKey();
                         Class handlerClass = entry.getValue();
                         Object handler = instances.get(path);
-                        String Get_type;
-                        StringParser parser = new StringParser(URI, path);
+                        StringParser parser = new StringParser();
                         if (URI.contains(path)) {
                             if (reqMethod.equals(RequestType.GET.value())) {
                                 resp.setContentType("application/json;charset=UTF-8");
-                                if (parser.Check_our_String(RequestType.GET)) {
+                                if (parser.Check_our_String(RequestType.GET, URI, path)) {
+                                    method = getMethod(handlerClass, path, RequestType.GET, parser);
                                     if (parser.getID().equals("")) {
-                                        Get_type = "";
-                                        method = getMethod(handlerClass, path, RequestType.GET, Get_type);
                                         result = method.invoke(handler, null);
                                     } else {
-                                        Get_type = "/:id";
-                                        method = getMethod(handlerClass, path, RequestType.GET, Get_type);
                                         result = method.invoke(handler, parser.getID());
 
                                     }
@@ -74,49 +70,45 @@ public class ListenServlet extends HttpServlet {
                                         resp.getOutputStream().write(gson.toJson(result).getBytes());
                                         resp.getOutputStream().close();
                                     } else {
-                                        resp.sendError(Responses.NOT_FOUND.getCode(),Responses.NOT_FOUND.getMessage());
+                                        resp.sendError(Responses.NOT_FOUND.getCode(), Responses.NOT_FOUND.getMessage());
                                     }
                                 } else {
-                                    resp.sendError(Responses.NOT_FOUND.getCode(),Responses.NOT_FOUND.getMessage());
+                                    resp.sendError(Responses.NOT_FOUND.getCode(), Responses.NOT_FOUND.getMessage());
                                 }
 
                             } else if (reqMethod.equals(RequestType.POST.value())) {
-                                Get_type = "";
-                                if (parser.Check_our_String(RequestType.POST)) {
-                                    method = getMethod(handlerClass, path, RequestType.POST, Get_type);
+                                if (parser.Check_our_String(RequestType.POST, URI, path)) {
+                                    method = getMethod(handlerClass, path, RequestType.POST, parser);
                                     result = method.invoke(handler, gson.fromJson(reader, find_class(method)));
                                     if (result.equals(true)) {
                                         resp.setStatus(201);
                                     } else {
-                                        resp.sendError(500, "Can`t add");
+                                        resp.sendError(Responses.CANT_ADD.getCode(), Responses.CANT_ADD.getMessage());
                                     }
                                 } else {
-                                    resp.sendError(Responses.NOT_FOUND.getCode(),Responses.NOT_FOUND.getMessage());
+                                    resp.sendError(Responses.NOT_FOUND.getCode(), Responses.NOT_FOUND.getMessage());
                                 }
 
                             } else if (reqMethod.equals(RequestType.PUT.value())) {
-                                Get_type = "/:id";
-                                if (parser.Check_our_String(RequestType.PUT)) {
-                                    method = getMethod(handlerClass, path, RequestType.PUT, Get_type);
+                                if (parser.Check_our_String(RequestType.PUT, URI, path)) {
+                                    method = getMethod(handlerClass, path, RequestType.PUT, parser);
                                     result = method.invoke(handler, gson.fromJson(reader, find_class(method)));
                                     if (result.equals(true)) {
                                         resp.setStatus(201);
                                     } else {
-                                        resp.sendError(500, "Can`t add");
+                                        resp.sendError(Responses.CANT_ADD.getCode(), Responses.CANT_ADD.getMessage());
                                     }
                                 }
 
 
                             } else if (reqMethod.equals(RequestType.DELETE.value())) {
-                                Get_type = "/:id";
-                                resp.setContentType("text/html");
-                                if (parser.Check_our_String(RequestType.DELETE)) {
-                                    method = getMethod(handlerClass, path, RequestType.DELETE, Get_type);
+                                if (parser.Check_our_String(RequestType.DELETE, URI, path)) {
+                                    method = getMethod(handlerClass, path, RequestType.DELETE, parser);
                                     result = method.invoke(handler, parser.getID());
                                     if (result.equals(true)) {
                                         resp.setStatus(201);
                                     } else {
-                                        resp.sendError(Responses.NOT_FOUND.getCode(),Responses.NOT_FOUND.getMessage());
+                                        resp.sendError(Responses.NOT_FOUND.getCode(), Responses.NOT_FOUND.getMessage());
                                     }
                                 }
                             }
@@ -150,44 +142,44 @@ public class ListenServlet extends HttpServlet {
 
     public Method getMethod(Class handlerClass,
                             String path,
-                            RequestType requestType, String type) {
+                            RequestType requestType, StringParser parser) {
         Method[] methods = handlerClass.getDeclaredMethods();
-
         for (int atIndex = 0; atIndex < methods.length; atIndex++) {
             Method currentMethod = methods[atIndex];
             Annotation[] methodAnnotations = currentMethod.getDeclaredAnnotations();
-
+            Map<String, String> temp_handler = parser.getHandler();
             for (Annotation annotation : methodAnnotations) {
-                if (requestType.equals(RequestType.GET)) {
-                    if (annotation instanceof Get) {
-                        Get myAnnotation = (Get) annotation;
-                        if (type.equals(myAnnotation.value()))
-                            return currentMethod;
+                try {
+                    if (requestType.equals(RequestType.GET)) {
+                        if (annotation instanceof Get) {
+                            Get myAnnotation = (Get) annotation;
+                            if (temp_handler.get(myAnnotation.value()).equals(parser.getID()))
+                                return currentMethod;
+                        }
+                    } else if (requestType.equals(RequestType.POST)) {
+                        if (annotation instanceof Post) {
+                            Post myAnnotation = (Post) annotation;
+                            if (temp_handler.get("").equals(parser.getID()))
+                                return currentMethod;
+                        }
+                    } else if (requestType.equals(RequestType.PUT)) {
+                        if (annotation instanceof Put) {
+                            Put myAnnotation = (Put) annotation;
+                            if (temp_handler.get(myAnnotation.value()).equals((parser.getID())))
+                                return currentMethod;
+                        }
+                    } else if (requestType.equals(RequestType.DELETE)) {
+                        if (annotation instanceof Delete) {
+                            Delete myAnnotation = (Delete) annotation;
+                            if (temp_handler.get(myAnnotation.value()).equals((parser.getID())))
+                                return currentMethod;
+                        }
                     }
-                } else if (requestType.equals(RequestType.POST)) {
-                    if (annotation instanceof Post) {
-                        Post myAnnotation = (Post) annotation;
-                        if (type.equals(""))
-                            return currentMethod;
-                    }
-                } else if (requestType.equals(RequestType.PUT)) {
-                    if (annotation instanceof Put) {
-                        Put myAnnotation = (Put) annotation;
-                        if (type.equals(myAnnotation.value()))
-                            return currentMethod;
-                    }
-                } else if (requestType.equals(RequestType.DELETE)) {
-                    if (annotation instanceof Delete) {
-                        Delete myAnnotation = (Delete) annotation;
-                        if (type.equals(myAnnotation.value()))
-                            return currentMethod;
-                    }
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
                 }
-
             }
-
         }
-
         return null;
     }
 
