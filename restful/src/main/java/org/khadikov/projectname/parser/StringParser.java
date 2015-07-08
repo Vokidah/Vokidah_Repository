@@ -11,8 +11,7 @@ import java.util.regex.Pattern;
 public class StringParser {
     private String id;
     private Map<String, String> handler = new HashMap<String, String>();
-    private final String ID = "(^/[0-9]+$)|(^/[0-9]+/$)";
-    private final String BOTH = "(^/$)|(^/[0-9]+$)|(^/[0-9]+/$)";
+    private final String ID = "(^/$)|(^/[0-9]+$)|(^/[0-9]+/$)";
 
     public void setId(String id) {
         this.id = id;
@@ -30,8 +29,7 @@ public class StringParser {
         return this.handler;
     }
 
-    public boolean Check_our_String(RequestType requestType, String URI, String path) {
-        this.handler.put("/path", path);
+    public boolean CheckOurString(RequestType requestType, String URI, String path) {
         if (!URI.substring(0, path.length()).equals(path)) {
             return false;
         } else {
@@ -40,19 +38,19 @@ public class StringParser {
                 return true;
             } else {
                 if (requestType.equals(RequestType.GET)) {
-                    return get_Mathcer_by_Request_Type(BOTH, URI, path);
+                    return getMathcerByRequest_Type(ID, URI, path);
                 } else if (requestType.equals(RequestType.POST)) {
                     return false;
                 }
                 if (requestType.equals(RequestType.PUT) || requestType.equals(RequestType.DELETE)) {
-                    return get_Mathcer_by_Request_Type(ID, URI, path);
+                    return getMathcerByRequest_Type(ID, URI, path);
                 }
                 return false;
             }
         }
     }
 
-    public boolean get_Mathcer_by_Request_Type(String possible_inputs, String URI, String path) {
+    public boolean getMathcerByRequest_Type(String possible_inputs, String URI, String path) {
         Pattern pattern = Pattern.compile(possible_inputs);
         Matcher m = pattern.matcher(URI.substring(path.length(), URI.length()));
         if (m.matches()) {

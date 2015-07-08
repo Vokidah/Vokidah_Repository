@@ -75,6 +75,8 @@ public class Users {
                 this.usersByEmail.get(user1.getEmail()).setName(user.getName());
                 this.usersByEmail.get(user1.getEmail()).setName(user.getEmail());
                 return true;
+            } else {
+                return addUser(user);
             }
         }
 
@@ -83,13 +85,18 @@ public class Users {
 
     @Delete("/:id")
     public boolean deleteUser(String id) {
-        if (usersByIdx.containsKey(Integer.parseInt(id))) {
-            for (int i = 0; i < users.size(); i++) {
-                if (Integer.parseInt(id) == users.get(i).getId()) {
-                    users.remove(i);
-                    this.usersByEmail.remove(usersByIdx.get(Integer.parseInt(id)).getEmail());
-                    this.usersByIdx.remove(Integer.parseInt(id));
-                    return true;
+        if (id.equals("")) {
+            deleteUser(Integer.toString(users.get(users.size() - 1).getId()));
+            return true;
+        } else {
+            if (usersByIdx.containsKey(Integer.parseInt(id))) {
+                for (int i = 0; i < users.size(); i++) {
+                    if (Integer.parseInt(id) == users.get(i).getId()) {
+                        users.remove(i);
+                        this.usersByEmail.remove(usersByIdx.get(Integer.parseInt(id)).getEmail());
+                        this.usersByIdx.remove(Integer.parseInt(id));
+                        return true;
+                    }
                 }
             }
         }

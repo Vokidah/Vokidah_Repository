@@ -58,7 +58,7 @@ public class ListenServlet extends HttpServlet {
                         if (URI.contains(path)) {
                             if (reqMethod.equals(RequestType.GET.value())) {
                                 resp.setContentType("application/json;charset=UTF-8");
-                                if (parser.Check_our_String(RequestType.GET, URI, path)) {
+                                if (parser.CheckOurString(RequestType.GET, URI, path)) {
                                     method = getMethod(handlerClass, path, RequestType.GET, parser);
                                     if (parser.getID().equals("")) {
                                         result = method.invoke(handler, null);
@@ -77,9 +77,9 @@ public class ListenServlet extends HttpServlet {
                                 }
 
                             } else if (reqMethod.equals(RequestType.POST.value())) {
-                                if (parser.Check_our_String(RequestType.POST, URI, path)) {
+                                if (parser.CheckOurString(RequestType.POST, URI, path)) {
                                     method = getMethod(handlerClass, path, RequestType.POST, parser);
-                                    result = method.invoke(handler, gson.fromJson(reader, find_class(method)));
+                                    result = method.invoke(handler, gson.fromJson(reader, findClass(method)));
                                     if (result.equals(true)) {
                                         resp.setStatus(201);
                                     } else {
@@ -90,9 +90,9 @@ public class ListenServlet extends HttpServlet {
                                 }
 
                             } else if (reqMethod.equals(RequestType.PUT.value())) {
-                                if (parser.Check_our_String(RequestType.PUT, URI, path)) {
+                                if (parser.CheckOurString(RequestType.PUT, URI, path)) {
                                     method = getMethod(handlerClass, path, RequestType.PUT, parser);
-                                    result = method.invoke(handler, gson.fromJson(reader, find_class(method)));
+                                    result = method.invoke(handler, gson.fromJson(reader, findClass(method)));
                                     if (result.equals(true)) {
                                         resp.setStatus(201);
                                     } else {
@@ -102,7 +102,7 @@ public class ListenServlet extends HttpServlet {
 
 
                             } else if (reqMethod.equals(RequestType.DELETE.value())) {
-                                if (parser.Check_our_String(RequestType.DELETE, URI, path)) {
+                                if (parser.CheckOurString(RequestType.DELETE, URI, path)) {
                                     method = getMethod(handlerClass, path, RequestType.DELETE, parser);
                                     result = method.invoke(handler, parser.getID());
                                     if (result.equals(true)) {
@@ -164,15 +164,11 @@ public class ListenServlet extends HttpServlet {
                         }
                     } else if (requestType.equals(RequestType.PUT)) {
                         if (annotation instanceof Put) {
-                            Put myAnnotation = (Put) annotation;
-                            if (temp_handler.get(myAnnotation.value()).equals((parser.getID())))
-                                return currentMethod;
+                            return currentMethod;
                         }
                     } else if (requestType.equals(RequestType.DELETE)) {
                         if (annotation instanceof Delete) {
-                            Delete myAnnotation = (Delete) annotation;
-                            if (temp_handler.get(myAnnotation.value()).equals((parser.getID())))
-                                return currentMethod;
+                            return currentMethod;
                         }
                     }
                 } catch (NullPointerException e) {
@@ -183,7 +179,7 @@ public class ListenServlet extends HttpServlet {
         return null;
     }
 
-    public Class find_class(Method method) {
+    public Class findClass(Method method) {
         Annotation[][] parameterAnnotations = method.getParameterAnnotations();
         Class[] parameterTypes = method.getParameterTypes();
 
