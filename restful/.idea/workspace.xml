@@ -1,20 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="180c8bcf-8020-4be9-aa9e-ce0b080db6c9" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/org/khadikov/projectname/servlet/ListenServlet.class" afterPath="$PROJECT_DIR$/target/classes/org/khadikov/projectname/servlet/ListenServlet.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/restful-1.0-SNAPSHOT/WEB-INF/classes/org/khadikov/projectname/servlet/ListenServlet.class" afterPath="$PROJECT_DIR$/target/restful-1.0-SNAPSHOT/WEB-INF/classes/org/khadikov/projectname/servlet/ListenServlet.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/org/khadikov/projectname/http/Responses.class" afterPath="$PROJECT_DIR$/target/classes/org/khadikov/projectname/http/Responses.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/restful-1.0-SNAPSHOT/WEB-INF/classes/org/khadikov/projectname/http/Responses.class" afterPath="$PROJECT_DIR$/target/restful-1.0-SNAPSHOT/WEB-INF/classes/org/khadikov/projectname/http/Responses.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/org/khadikov/projectname/parser/StringParser.class" afterPath="$PROJECT_DIR$/target/classes/org/khadikov/projectname/parser/StringParser.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/restful-1.0-SNAPSHOT/WEB-INF/classes/org/khadikov/projectname/parser/StringParser.class" afterPath="$PROJECT_DIR$/target/restful-1.0-SNAPSHOT/WEB-INF/classes/org/khadikov/projectname/parser/StringParser.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/org/khadikov/projectname/rest/Users.class" afterPath="$PROJECT_DIR$/target/classes/org/khadikov/projectname/rest/Users.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/restful-1.0-SNAPSHOT/WEB-INF/classes/org/khadikov/projectname/rest/Users.class" afterPath="$PROJECT_DIR$/target/restful-1.0-SNAPSHOT/WEB-INF/classes/org/khadikov/projectname/rest/Users.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/khadikov/projectname/servlet/ListenServlet.java" afterPath="$PROJECT_DIR$/src/main/java/org/khadikov/projectname/servlet/ListenServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/khadikov/projectname/parser/StringParser.java" afterPath="$PROJECT_DIR$/src/main/java/org/khadikov/projectname/parser/StringParser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/khadikov/projectname/rest/Users.java" afterPath="$PROJECT_DIR$/src/main/java/org/khadikov/projectname/rest/Users.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="180c8bcf-8020-4be9-aa9e-ce0b080db6c9" name="Default" comment="" />
     <ignored path="restful.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -906,12 +893,12 @@
       <workItem from="1435912630583" duration="4647000" />
       <workItem from="1436177279543" duration="111000" />
       <workItem from="1436367591806" duration="1819000" />
-      <workItem from="1436369491102" duration="981000" />
+      <workItem from="1436369491102" duration="1147000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="41987000" />
+    <option name="totallyTimeSpent" value="42153000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1384" height="738" extended-state="7" />
